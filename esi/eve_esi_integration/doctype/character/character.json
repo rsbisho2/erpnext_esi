@@ -2,6 +2,7 @@
     "doctype": "DocType",
     "name": "Character",
     "module": "Eve ESI Integration",
+    "autoname": "field:character_name",
     "custom": 0,
     "fields": [
         {

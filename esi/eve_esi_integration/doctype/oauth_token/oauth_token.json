@@ -11,6 +11,12 @@
       "options": "User"
      },
      {
+        "fieldname": "character",
+        "fieldtype": "Link",
+        "label": "Character",
+        "options": "Character"
+       },
+     {
         "fieldname": "access_token",
         "fieldtype": "Text",
         "label": "Access Token"

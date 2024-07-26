@@ -68,18 +68,33 @@ def oauth2_login(code, state):
             user.save()
             user_name = user.name
         
+        # Createthe Character record if it does not exist
+        character_doc_name = frappe.db.get_value('Character', {'name': character_name}, 'name')
+        if not character_doc_name:
+            character_doc = frappe.new_doc('Character')
+            character_doc.character_id = character_id
+            character_doc.character_name = character_name
+            character_doc.name = character_name
+            character_doc.user = user_name
+            character_doc.flags.ignore_permissions = True
+            character_doc.save()
+        
         # Create or update the OAuth Token record
         oauth_token_name = frappe.db.get_value('OAuth Token', {'user': user_name}, 'name')
         if not oauth_token_name:
             oauth_token = frappe.new_doc('OAuth Token')
             oauth_token.user = user_name
+            oauth_token.character = character_name
         else:
             oauth_token = frappe.get_doc('OAuth Token', oauth_token_name)
+
+        
 
         oauth_token.update({
             'access_token': access_token,
             'refresh_token': refresh_token,
-            'expires_in': int(expires_in)  # Ensure this is an integer
+            'expires_in': int(expires_in),  # Ensure this is an integer
+            'character': character_name
         })
         oauth_token.flags.ignore_permissions = True
         oauth_token.save()
