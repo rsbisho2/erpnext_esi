@@ -1,0 +1,74 @@
+{
+    "doctype": "DocType",
+    "name": "Corporation Wallet Transaction",
+    "module": "Eve ESI Integration",
+    "custom": 0,
+    "fields": [
+        {
+            "fieldname": "corporation_wallet_division",
+            "fieldtype": "Link",
+            "options": "CorporationWalletDivision",
+            "label": "Corporation Wallet Division"
+        },
+        {
+            "fieldname": "transaction_id",
+            "fieldtype": "Int",
+            "label": "Transaction ID"
+        },
+        {
+            "fieldname": "date",
+            "fieldtype": "Datetime",
+            "label": "Date"
+        },
+        {
+            "fieldname": "type_id",
+            "fieldtype": "Int",
+            "label": "Type ID"
+        },
+        {
+            "fieldname": "quantity",
+            "fieldtype": "Int",
+            "label": "Quantity"
+        },
+        {
+            "fieldname": "unit_price",
+            "fieldtype": "Float",
+            "label": "Unit Price"
+        },
+        {
+            "fieldname": "client_id",
+            "fieldtype": "Int",
+            "label": "Client ID"
+        },
+        {
+            "fieldname": "location_id",
+            "fieldtype": "Int",
+            "label": "Location ID"
+        },
+        {
+            "fieldname": "is_buy",
+            "fieldtype": "Check",
+            "label": "Is Buy"
+        },
+        {
+            "fieldname": "journal_ref_id",
+            "fieldtype": "Int",
+            "label": "Journal Reference ID"
+        },
+        {
+            "fieldname": "is_personal",
+            "fieldtype": "Check",
+            "label": "Is Personal"
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1
+        }
+    ],
+    "istable": 1
+}

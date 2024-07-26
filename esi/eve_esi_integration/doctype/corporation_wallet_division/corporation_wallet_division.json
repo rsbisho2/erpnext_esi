@@ -1,0 +1,29 @@
+{
+    "doctype": "DocType",
+    "name": "Corporation Wallet Division",
+    "module": "Eve ESI Integration",
+    "custom": 0,
+    "fields": [
+        {
+            "fieldname": "corporation",
+            "fieldtype": "Link",
+            "options": "Corporation",
+            "label": "Corporation"
+        },
+        {
+            "fieldname": "division_id",
+            "fieldtype": "Int",
+            "label": "Division ID"
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1
+        }
+    ],
+    "istable": 0
+}

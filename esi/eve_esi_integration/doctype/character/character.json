@@ -1,0 +1,35 @@
+{
+    "doctype": "DocType",
+    "name": "Character",
+    "module": "Eve ESI Integration",
+    "custom": 0,
+    "fields": [
+        {
+            "fieldname": "character_id",
+            "fieldtype": "Int",
+            "label": "Character ID"
+        },
+        {
+            "fieldname": "wallet_balance",
+            "fieldtype": "Float",
+            "label": "Wallet Balance"
+        },
+        {
+            "fieldname": "character_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Character Name",
+            "reqd": 1
+           }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1
+        }
+    ],
+    "istable": 0
+}

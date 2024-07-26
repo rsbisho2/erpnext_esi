@@ -1,0 +1,40 @@
+{
+    "doctype": "DocType",
+    "name": "OAuth Token",
+    "module": "Eve ESI Integration",
+    "custom": 0,
+    "fields": [
+     {
+      "fieldname": "user",
+      "fieldtype": "Link",
+      "label": "User",
+      "options": "User"
+     },
+     {
+        "fieldname": "access_token",
+        "fieldtype": "Text",
+        "label": "Access Token"
+       },
+       {
+        "fieldname": "refresh_token",
+        "fieldtype": "Text",
+        "label": "Refresh Token"
+       },
+     {
+      "fieldname": "expires_in",
+      "fieldtype": "Int",
+      "label": "Expires In"
+     }
+    ],
+    "permissions": [
+     {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1
+     }
+    ],
+    "istable": 0
+   }
+   

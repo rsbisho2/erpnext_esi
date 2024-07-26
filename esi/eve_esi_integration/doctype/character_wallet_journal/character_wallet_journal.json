@@ -1,0 +1,64 @@
+{
+    "doctype": "DocType",
+    "name": "Character Wallet Journal",
+    "module": "Eve ESI Integration",
+    "custom": 0,
+    "fields": [
+        {
+            "fieldname": "character",
+            "fieldtype": "Link",
+            "options": "Character",
+            "label": "Character"
+        },
+        {
+            "fieldname": "date",
+            "fieldtype": "Datetime",
+            "label": "Date"
+        },
+        {
+            "fieldname": "ref_id",
+            "fieldtype": "Int",
+            "label": "Reference ID"
+        },
+        {
+            "fieldname": "ref_type",
+            "fieldtype": "Data",
+            "label": "Reference Type"
+        },
+        {
+            "fieldname": "amount",
+            "fieldtype": "Float",
+            "label": "Amount"
+        },
+        {
+            "fieldname": "balance",
+            "fieldtype": "Float",
+            "label": "Balance"
+        },
+        {
+            "fieldname": "reason",
+            "fieldtype": "Data",
+            "label": "Reason"
+        },
+        {
+            "fieldname": "tax_receiver_id",
+            "fieldtype": "Int",
+            "label": "Tax Receiver ID"
+        },
+        {
+            "fieldname": "tax",
+            "fieldtype": "Float",
+            "label": "Tax"
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1
+        }
+    ],
+    "istable": 1
+}

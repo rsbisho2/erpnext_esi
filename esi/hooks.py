@@ -24,7 +24,7 @@ app_license = "MIT"
 # webform_include_css = {"doctype": "public/css/doctype.css"}
 
 # include js in page
-# page_js = {"page" : "public/js/file.js"}
+# page_js = {"eve-character" : "public/js/file.js"}
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
@@ -103,6 +103,21 @@ app_license = "MIT"
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
+doctype_js = {
+    "OAuth Token": "public/js/oauth_token.js"  # If you have any JS, else this can be omitted
+}
+scheduler_events = {
+    "all": [
+        "esi.api.refresh_oauth_token",
+        "esi.api.sync_swagger_data"
+    ],
+    "cron": {
+        "*/15 * * * *": [
+            "esi.api.refresh_oauth_token",
+            "esi.api.sync_swagger_data"
+        ]
+    }
+}
 
 # DocType Class
 # ---------------
