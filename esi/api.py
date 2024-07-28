@@ -220,22 +220,44 @@ def refresh_oauth_token(token_name=None):
     except Exception as e:
         frappe.log_error(message=str(e), title="Unexpected Error in OAuth2 Token Refresh")
 
-def get_oauth_details():
-    social_login_key = frappe.get_doc("Social Login Key", "esi")
-    oauth_token = frappe.get_all("OAuth Token", filters={}, fields=["name", "access_token", "refresh_token"])
+def get_character_name_by_id(character_id):
+    """
+    Get the character name by character ID.
 
-    if not oauth_token:
-        frappe.throw("No OAuth Token found for the service 'esi'")
+    :param character_id: The ID of the character.
+    :return: The name of the character.
+    :raises: frappe.DoesNotExistError if the character is not found.
+    """
+    character = frappe.get_all('Character',filters={"character_id":character_id})[0]
+    if not character:
+        frappe.throw(f"No character found with ID '{character_id}'")
+    return character.name
+
+def get_oauth_details(character_id):
+    # Get the character name using the helper method
+    character_name = get_character_name_by_id(character_id)
+
+    # Get the OAuth Token linked to the Character with the given character_id
+    oauth_token_name = frappe.get_all('OAuth Token',filters={"character":"Love doctor"})[0]
+    if not oauth_token_name:
+        frappe.throw(f"No OAuth Token found for character ID '{character_name}'")
+
+    # Fetch the OAuth Token details
+    oauth_token = frappe.get_doc("OAuth Token", oauth_token_name)
+
+    # Get the Social Login Key details
+    social_login_key = frappe.get_doc("Social Login Key", "esi")
 
     oauth_details = {
         "client_id": social_login_key.client_id,
         "client_secret": social_login_key.client_secret,
-        "access_token": frappe.get_value("OAuth Token", oauth_token[0].name, "access_token"),
-        "refresh_token": frappe.get_value("OAuth Token", oauth_token[0].name, "refresh_token"),
+        "access_token": oauth_token.access_token,
+        "refresh_token": oauth_token.refresh_token,
         "base_url": social_login_key.base_url,
-        "token_name": oauth_token[0].name
+        "token_name": oauth_token.name
     }
     return oauth_details
+
 
 def fetch_data(character_id, endpoint):
     oauth_details = get_oauth_details(character_id)
@@ -275,9 +297,9 @@ def sync_data_to_erpnext(data, doctype):
 @frappe.whitelist()
 def sync_swagger_data():
     # Fetch character wallet journal data
-    character_wallet_journal_data = fetch_data("/characters/667496692/wallet/journal/")
+    character_wallet_journal_data = fetch_data(957147819,"/characters/957147819/wallet/journal/")
     sync_data_to_erpnext(character_wallet_journal_data, "Character Wallet Journal")
 
     # Fetch character wallet transaction data
-    character_wallet_transaction_data = fetch_data("/characters/667496692/wallet/transactions/")
+    character_wallet_transaction_data = fetch_data(957147819,"/characters/957147819/wallet/transactions/")
     sync_data_to_erpnext(character_wallet_transaction_data, "Character Wallet Transaction")
