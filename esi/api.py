@@ -1,3 +1,4 @@
+from datetime import datetime
 import frappe
 from frappe import _
 import requests
@@ -277,6 +278,12 @@ def fetch_data(character_id, endpoint):
         frappe.log_error(message=f"Failed to fetch data from {endpoint}. Status Code: {response.status_code}, Response: {response.text}", title="Data Fetch Failed")
         frappe.throw(f"Failed to fetch data from {endpoint}")
 
+def convert_esi_timestamp(timestamp):
+    dt = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ")
+    formatted_timestamp = dt.strftime("%Y-%m-%d %H:%M:%S")
+    return formatted_timestamp
+
+
 def sync_data_to_erpnext(data, doctype):
     # Get the meta for the doctype to ensure proper field mapping
     doctype_meta = frappe.get_meta(doctype)
@@ -293,13 +300,34 @@ def sync_data_to_erpnext(data, doctype):
         doc.insert(ignore_permissions=True)
         frappe.db.commit()
 
+def sync_wallet_journal(character):
+    character_doc = frappe.get_doc("Character", character)
+    response = fetch_data(character_doc.character_id, f"/characters/{character_doc.character_id}/wallet/journal/")
+
+    for itm in response:
+        wj = frappe.get_doc({"doctype":"Character Wallet Journal"})
+        wj.amount = itm['amount']
+        wj.balance = itm['balance']
+        wj.date = convert_esi_timestamp(itm['date'])
+        wj.reference_id = itm['id']
+        wj.reference_type = itm['ref_type']
+        wj.reason = itm['reason']
+        wj.parent = character_doc.name
+        wj.character = character_doc.name
+        wj.parenttype = "Character"
+        wj.insert(ignore_permissions=True)
+
+
+
 
 @frappe.whitelist()
 def sync_swagger_data():
     # Fetch character wallet journal data
-    character_wallet_journal_data = fetch_data(957147819,"/characters/957147819/wallet/journal/")
-    sync_data_to_erpnext(character_wallet_journal_data, "Character Wallet Journal")
+    #character_wallet_journal_data = fetch_data(957147819,"/characters/957147819/wallet/journal/")
+    #sync_data_to_erpnext(character_wallet_journal_data, "Character Wallet Journal")
 
     # Fetch character wallet transaction data
-    character_wallet_transaction_data = fetch_data(957147819,"/characters/957147819/wallet/transactions/")
-    sync_data_to_erpnext(character_wallet_transaction_data, "Character Wallet Transaction")
+    #character_wallet_transaction_data = fetch_data(957147819,"/characters/957147819/wallet/transactions/")
+    #ync_data_to_erpnext(character_wallet_transaction_data, "Character Wallet Transaction")
+    for character in frappe.get_all("Character"):
+        sync_wallet_journal(character.name)
