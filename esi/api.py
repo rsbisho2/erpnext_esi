@@ -305,19 +305,22 @@ def sync_wallet_journal(character):
     response = fetch_data(character_doc.character_id, f"/characters/{character_doc.character_id}/wallet/journal/")
 
     for itm in response:
-        wj = frappe.get_doc({"doctype":"Character Wallet Journal"})
-        wj.amount = itm['amount']
-        wj.balance = itm['balance']
-        wj.date = convert_esi_timestamp(itm['date'])
-        wj.reference_id = itm['id']
-        wj.reference_type = itm['ref_type']
-        wj.reason = itm['reason']
-        wj.parent = character_doc.name
-        wj.character = character_doc.name
-        wj.parenttype = "Character"
-        wj.insert(ignore_permissions=True)
+        if not frappe.db.exists('Character Wallet Journal',itm['id']):
+            wj = frappe.get_doc({"doctype":"Character Wallet Journal","ref_id":itm['id'],"name":itm['id']})
+            wj.amount = itm['amount']
+            wj.balance = itm['balance']
+            wj.date = convert_esi_timestamp(itm['date'])
+            wj.ref_type = itm['ref_type']
+            wj.reason = itm['reason']
+            wj.character = character_doc.name
+            wj.insert(ignore_permissions=True)
 
-
+def sync_wallet_balance(character):
+    character_doc = frappe.get_doc("Character", character)
+    response = fetch_data(character_doc.character_id, f"/characters/{character_doc.character_id}/wallet/")
+    frappe.log_error("balance msg", response)
+    character_doc.wallet_balance = response
+    character_doc.save()
 
 
 @frappe.whitelist()
@@ -331,3 +334,4 @@ def sync_swagger_data():
     #ync_data_to_erpnext(character_wallet_transaction_data, "Character Wallet Transaction")
     for character in frappe.get_all("Character"):
         sync_wallet_journal(character.name)
+        sync_wallet_balance(character.name)

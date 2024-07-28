@@ -21,17 +21,7 @@
             "in_list_view": 1,
             "label": "Character Name",
             "reqd": 1
-           },
-        {
-            "fieldname":"wallet_transactions",
-            "fieldtype":"Table",
-            "options":"Character Wallet Transaction"
-        },
-        {
-            "fieldname":"wallet_journals",
-            "fieldtype":"Table",
-            "options":"Character Wallet Journal"
-        }
+           }
     ],
     "permissions": [
         {

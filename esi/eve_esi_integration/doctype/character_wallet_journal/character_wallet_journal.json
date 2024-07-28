@@ -2,38 +2,44 @@
     "doctype": "DocType",
     "name": "Character Wallet Journal",
     "module": "Eve ESI Integration",
+    "autoname": "field:ref_id",
     "custom": 0,
     "fields": [
         {
             "fieldname": "character",
             "fieldtype": "Link",
             "options": "Character",
-            "label": "Character"
+            "label": "Character",
+            "in_list_view":1
         },
         {
             "fieldname": "date",
             "fieldtype": "Datetime",
-            "label": "Date"
+            "label": "Date",
+            "in_list_view":1
         },
         {
             "fieldname": "ref_id",
-            "fieldtype": "Int",
+            "fieldtype": "Data",
             "label": "Reference ID"
         },
         {
             "fieldname": "ref_type",
             "fieldtype": "Data",
-            "label": "Reference Type"
+            "label": "Reference Type",
+            "in_list_view":1
         },
         {
             "fieldname": "amount",
             "fieldtype": "Float",
-            "label": "Amount"
+            "label": "Amount",
+            "in_list_view":1
         },
         {
             "fieldname": "balance",
             "fieldtype": "Float",
-            "label": "Balance"
+            "label": "Balance",
+            "in_list_view":1
         },
         {
             "fieldname": "reason",
@@ -60,5 +66,5 @@
             "delete": 1
         }
     ],
-    "istable": 1
+    "istable": 0
 }
