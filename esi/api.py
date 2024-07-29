@@ -239,7 +239,7 @@ def get_oauth_details(character_id):
     character_name = get_character_name_by_id(character_id)
 
     # Get the OAuth Token linked to the Character with the given character_id
-    oauth_token_name = frappe.get_all('OAuth Token',filters={"character":"Love doctor"})[0]
+    oauth_token_name = frappe.get_all('OAuth Token',filters={"character":character_name})[0]
     if not oauth_token_name:
         frappe.throw(f"No OAuth Token found for character ID '{character_name}'")
 
