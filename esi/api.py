@@ -305,20 +305,30 @@ def sync_wallet_journal(character):
     response = fetch_data(character_doc.character_id, f"/characters/{character_doc.character_id}/wallet/journal/")
 
     for itm in response:
-        if not frappe.db.exists('Character Wallet Journal',itm['id']):
-            wj = frappe.get_doc({"doctype":"Character Wallet Journal","ref_id":itm['id'],"name":itm['id']})
-            wj.amount = itm['amount']
-            wj.balance = itm['balance']
-            wj.date = convert_esi_timestamp(itm['date'])
-            wj.ref_type = itm['ref_type']
-            wj.reason = itm['reason']
+        if not frappe.db.exists('Character Wallet Journal', itm.get('id')):
+            wj = frappe.get_doc({
+                "doctype": "Character Wallet Journal",
+                "ref_id": itm.get('id'),
+                "name": itm.get('id')
+            })
+            wj.amount = itm.get('amount')
+            wj.balance = itm.get('balance')
+            wj.description = itm.get('description')
+            wj.date = convert_esi_timestamp(itm.get('date'))
+            wj.ref_type = itm.get('ref_type')
+            wj.reason = itm.get('reason')
+            wj.context_id = itm.get('context_id')
+            wj.context_id_type = itm.get('context_id_type')
+            wj.first_party_id = itm.get('first_party_id')
+            wj.second_party_id = itm.get('second_party_id')
+            wj.tax = itm.get('tax')
+            wj.tax_receiver_id = itm.get('tax_receiver_id')
             wj.character = character_doc.name
             wj.insert(ignore_permissions=True)
 
 def sync_wallet_balance(character):
     character_doc = frappe.get_doc("Character", character)
     response = fetch_data(character_doc.character_id, f"/characters/{character_doc.character_id}/wallet/")
-    frappe.log_error("balance msg", response)
     character_doc.wallet_balance = response
     character_doc.save()
 

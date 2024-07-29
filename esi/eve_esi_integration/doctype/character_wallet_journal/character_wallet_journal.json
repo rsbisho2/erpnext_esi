@@ -21,12 +21,12 @@
         {
             "fieldname": "ref_id",
             "fieldtype": "Data",
-            "label": "Reference ID"
+            "label": "Ref ID"
         },
         {
             "fieldname": "ref_type",
             "fieldtype": "Data",
-            "label": "Reference Type",
+            "label": "Ref Type",
             "in_list_view":1
         },
         {
@@ -50,6 +50,36 @@
             "fieldname": "tax_receiver_id",
             "fieldtype": "Int",
             "label": "Tax Receiver ID"
+        },
+        {
+            "fieldname": "tax",
+            "fieldtype": "Float",
+            "label": "Tax"
+        },
+        {
+            "fieldname": "context_id_type",
+            "fieldtype": "Data",
+            "label": "Context ID Type"
+        },
+        {
+            "fieldname": "context_id",
+            "fieldtype": "Data",
+            "label": "Context ID"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Data",
+            "label": "Description"
+        },
+        {
+            "fieldname": "first_party_id",
+            "fieldtype": "Data",
+            "label": "First Party ID"
+        },
+        {
+            "fieldname": "second_party_id",
+            "fieldtype": "Data",
+            "label": "Second Party ID"
         },
         {
             "fieldname": "tax",

@@ -107,10 +107,7 @@ doctype_js = {
     "OAuth Token": "public/js/oauth_token.js"  # If you have any JS, else this can be omitted
 }
 scheduler_events = {
-    "all": [
-        "esi.api.refresh_oauth_token",
-        "esi.api.sync_swagger_data"
-    ],
+
     "cron": {
         "*/15 * * * *": [
             "esi.api.refresh_oauth_token",
